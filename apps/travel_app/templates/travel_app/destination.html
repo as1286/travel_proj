@@ -1,0 +1,15 @@
+<a href="/travels">Travels</a><br>
+<a href="/logout">Logout</a><br>
+
+{{trip.destination}}<br>
+Planned by: {{trip.created_by.first_name}}<br>
+Description: {{trip.description}}<br>
+Travel Date From: {{trip.date_from}}<br>
+Travel Date To: {{trip.date_to}}<br>
+
+Other Users Joining the trip:<br>
+{% for u in trip.joined_by.all %}
+  {% if u != trip.created_by %}
+    {{ u.first_name }}<br>
+  {% endif %}
+{% endfor %}

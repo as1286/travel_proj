@@ -1,0 +1,36 @@
+<a href="/logout">Logout</a><br>
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+Hello, {{user.first_name}}!<br>
+
+<h3>Your Trip Schedules:</h3>
+{% for t in your_trips %}
+  <a href="/travels/destination/{{t.id}}">{{t.destination}}</a><br> 
+  {{t.date_from}}<br>
+  {{t.date_to}}<br>
+  {{t.description}}<br>
+{% endfor %}  
+
+<h3>Other User's Travel Plans:</h3>
+{% for t in others_trips %}
+  {{t.created_by.first_name}}<br>
+  <a href="/travels/destination/{{t.id}}">{{t.destination}}</a><br> 
+  {{t.destination}}<br>
+  {{t.date_from}}<br>
+  {{t.date_to}}<br>
+  {{t.description}}<br>
+  <form action="/travels/join" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="travel_id" value={{t.id}}>
+    <input type="submit" value="Join">
+  </form> 
+{% endfor %}  
+ 
+
+<a href="/travels/new">Add Travel Plan</a>
